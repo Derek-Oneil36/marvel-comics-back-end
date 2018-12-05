@@ -1,24 +1,26 @@
 const mongoose = require('mongoose')
 
 const comicSchema = new mongoose.Schema({
-  comics: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comic'}],
-  name: {
-    title: String,
+  title: {
+    type: String,
     required: true
   },
   issue: {
-    type: Number,
+    type: String,
     required: true
   },
   price: {
     type: Number,
     required: true
-  },
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
   }
+  // date: {
+  //   type: Number,
+  //   required: true
+  // },
+  // img: {
+  //   type: Image,
+  //   required: true
+  // }
 }, {
   timestamps: true
 })
