@@ -1,10 +1,13 @@
 const mongoose = require('mongoose')
 
 const favoriteSchema = new mongoose.Schema({
-  comics: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comic'}],
-  total: {
+  comicId: {
     type: Number,
-    required: true
+    required: false
+  },
+  rating: {
+    type: Number,
+    required: false
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

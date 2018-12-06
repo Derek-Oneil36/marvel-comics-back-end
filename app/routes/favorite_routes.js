@@ -31,25 +31,24 @@ const router = express.Router()
 // INDEX
 // GET /favorites
 router.get('/favorites', requireToken, (req, res) => {
-  Favorite.find().populate('products')
-    .then(favorites => {
-      console.log(req.user.id)
-
-      const ordersByOwner = favorites.filter(favorite => {
-        if (favorite.owner === req.user.id) {
-          return true
-        }
-      })
-      console.log(ordersByOwner)
-      // pass the `req` object and the Mongoose record to `requireOwnership`
-      // it will throw an error if the current user isn't the owner
-      // requireOwnership(req, favorites)
-      // `favorites` will be an array of Mongoose documents
-      // we want to convert each one to a POJO, so we use `.map` to
-      // apply `.toObject` to each one
-      return ordersByOwner.map(favorite => favorite.toObject())
-      // return favorite.filter()
-    })
+  Favorite.find()
+    // .then(favorites => {
+    //   console.log(req.user.id)
+    //
+    //   const favoritesByOwner = favorites.filter(favorite => {
+    //     if (favorite.owner === req.user.id) {
+    //       return true
+    //     }
+    //   })
+    //   // pass the `req` object and the Mongoose record to `requireOwnership`
+    //   // it will throw an error if the current user isn't the owner
+    //   // requireOwnership(req, favorites)
+    //   // `favorites` will be an array of Mongoose documents
+    //   // we want to convert each one to a POJO, so we use `.map` to
+    //   // apply `.toObject` to each one
+    //   return favoritesByOwner.map(favorite => favorite.toObject())
+    //   // return favorite.filter()
+    // })
     // respond with status 200 and JSON of the favorites
     .then(favorites => res.status(200).json({ favorites: favorites }))
     // if an error occurs, pass it to the handler
