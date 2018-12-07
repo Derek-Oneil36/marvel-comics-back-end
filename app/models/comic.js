@@ -5,11 +5,11 @@ const comicSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  issue: {
-    type: String,
+  id: {
+    type: [Number],
     required: true
   },
-  price: {
+  rating: {
     type: Number,
     required: true
   }

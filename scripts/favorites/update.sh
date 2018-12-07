@@ -10,9 +10,7 @@ curl "${API}${URL_PATH}/${FAV_ID}" \
   --header "Authorization: Bearer ${TOKEN}" \
   --data '{
     "favorite": {
-      "comicId": "'"${C_ID}"'",
-      "rating": "'"${RATE}"'"
-
+      "comicId": "'"${C_ID}"'"
     }
   }'
 

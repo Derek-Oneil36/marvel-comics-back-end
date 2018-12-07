@@ -5,10 +5,7 @@ const favoriteSchema = new mongoose.Schema({
     type: Number,
     required: false
   },
-  rating: {
-    type: Number,
-    required: false
-  },
+
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

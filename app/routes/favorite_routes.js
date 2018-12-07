@@ -32,23 +32,23 @@ const router = express.Router()
 // GET /favorites
 router.get('/favorites', requireToken, (req, res) => {
   Favorite.find()
-    // .then(favorites => {
-    //   console.log(req.user.id)
-    //
-    //   const favoritesByOwner = favorites.filter(favorite => {
-    //     if (favorite.owner === req.user.id) {
-    //       return true
-    //     }
-    //   })
-    //   // pass the `req` object and the Mongoose record to `requireOwnership`
-    //   // it will throw an error if the current user isn't the owner
-    //   // requireOwnership(req, favorites)
-    //   // `favorites` will be an array of Mongoose documents
-    //   // we want to convert each one to a POJO, so we use `.map` to
-    //   // apply `.toObject` to each one
-    //   return favoritesByOwner.map(favorite => favorite.toObject())
-    //   // return favorite.filter()
-    // })
+    .then(favorites => {
+      console.log(req.user.id)
+
+      const favoritesByOwner = favorites.filter(favorite => {
+        if (favorite.owner.equals(req.user._id)) {
+          return true
+        }
+      })
+      // pass the `req` object and the Mongoose record to `requireOwnership`
+      // it will throw an error if the current user isn't the owner
+      // requireOwnership(req, favorites)
+      // `favorites` will be an array of Mongoose documents
+      // we want to convert each one to a POJO, so we use `.map` to
+      // apply `.toObject` to each one
+      return favoritesByOwner.map(favorite => favorite.toObject())
+      // return favorite.filter()
+    })
     // respond with status 200 and JSON of the favorites
     .then(favorites => res.status(200).json({ favorites: favorites }))
     // if an error occurs, pass it to the handler
@@ -72,9 +72,6 @@ router.get('/favorites/:id', requireToken, (req, res) => {
 router.post('/favorites', requireToken, (req, res) => {
   // set owner of new favorite to be current user
   req.body.favorite.owner = req.user.id
-
-  console.log(req.body.favorite)
-
   Favorite.create(req.body.favorite)
     // respond to succesful `create` with status 201 and JSON of new "favorite"
     .then(favorite => {
@@ -127,6 +124,7 @@ router.patch('/favorites/:id', requireToken, (req, res) => {
 // DESTROY
 // DELETE /favorites/5a7db6c74d55bc51bdf39793
 router.delete('/favorites/:id', requireToken, (req, res) => {
+  console.log('request:::: ', req)
   Favorite.findById(req.params.id)
     .then(handle404)
     .then(favorite => {
